@@ -1,0 +1,27 @@
+# Local multi-container stack:  docker compose up --build
+#   dashboard -> http://localhost:5173      API docs -> http://localhost:8000/docs
+services:
+  backend-api:
+    build:
+      context: .
+      dockerfile: apps/backend/Dockerfile
+    environment:
+      NTN_DATASET_DIR: /data/datasets
+      NTN_CORS_ORIGINS: http://localhost:5173
+    volumes:
+      # TLE files in the workspace's 6G_Datasets/ folder
+      - ./6G_Datasets:/data/datasets:ro
+      # trained weights + norm stats exported from Colab
+      - ./packages/open_ntn_ttff/models:/workspace/packages/open_ntn_ttff/models:ro
+    ports:
+      - "8000:8000"
+    restart: unless-stopped
+
+  web-dashboard:
+    build:
+      context: apps/frontend
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend-api
+    restart: unless-stopped

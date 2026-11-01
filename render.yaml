@@ -1,0 +1,21 @@
+# Render Blueprint - deploys the FastAPI backend as a Docker web service.
+# (The React dashboard is deployed separately on Vercel, see README.)
+services:
+  - type: web
+    name: ntn-ttff-backend
+    runtime: docker
+    dockerfilePath: ./apps/backend/Dockerfile
+    dockerContext: .
+    plan: free
+    healthCheckPath: /api/health
+    envVars:
+      - key: PORT
+        value: "8000"
+      - key: NTN_MAX_ONEWEB          # fewer OneWeb satellites = less memory on small plans
+        value: "300"
+      - key: NTN_TICK_HZ
+        value: "4"
+      - key: NTN_CORS_ORIGINS        # set to your Vercel URL, e.g. https://my-dashboard.vercel.app
+        sync: false
+      - key: NTN_CORS_ORIGIN_REGEX   # also allow Vercel preview URLs
+        value: https://.*\.vercel\.app

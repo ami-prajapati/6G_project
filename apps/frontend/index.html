@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="6G LEO-Assisted Fast GNSS TTFF Engine dashboard" />
+    <title>6G LEO-Assisted Fast GNSS TTFF Engine</title>
+    <script>
+      // apply the saved theme before first paint (default: dark)
+      try {
+        if (localStorage.getItem('theme') === 'light') document.documentElement.classList.add('light')
+      } catch (e) {}
+    </script>
+  </head>
+  <body class="bg-slate-950">
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
